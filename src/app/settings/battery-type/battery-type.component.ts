@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {PopoverController} from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-battery-type',
@@ -13,10 +14,14 @@ export class BatteryTypeComponent implements OnInit {
   batteryGroups: number;
   cellCapacity: number;
 
-  constructor(private popover: PopoverController) {
-    this.batteryCells = 12;
-    this.batteryGroups = 2;
-    this.cellCapacity = 3000;
+  constructor(private popover: PopoverController, private storageService: StorageService) {
+    this.loadBattType
+  }
+
+  private async loadBattType() {
+    this.batteryCells = Number(await this.storageService.get('battery.cells'));
+    this.batteryGroups = Number(await this.storageService.get('battery.groups'));
+    this.cellCapacity = Number(await this.storageService.get('battery.cellCapacity'));
   }
 
   ngOnInit() {
